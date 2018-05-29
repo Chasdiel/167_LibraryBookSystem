@@ -1,29 +1,29 @@
 package model;
 
-import db.JDBCConnection;
+import dbConnect.JDBCConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ClientModel {
-    private int clientId;
+    private int Id;
     public String name;
     // ilość wypożyczonych książek? - po co za każdym razem przeszukiwac całą bazę, skoro wystarczy przechowywac dane
 
-    public ClientModel(int clientId, String name) {
-        setClientId(clientId);
+    public ClientModel(int Id, String name) {
+        setId(Id);
         setName(name);
     }
     public ClientModel(String name){
         setName(name);
     }
 
-    public int getClientId() {
-        return clientId;
+    public int getId() {
+        return Id;
     }
 
-    private void setClientId(int clientId) {
-        this.clientId = clientId;
+    private void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getName() {
@@ -59,11 +59,11 @@ public class ClientModel {
         return false;
     }
 
-    public static boolean delClientByID(int clientId){
+    public static boolean delClientByID(int Id){
         PreparedStatement prepStm = null;
         try {
-            prepStm = JDBCConnection.getConnection().prepareStatement("DELETE FROM Clients WHERE clientId= ?");
-            prepStm.setInt(1, clientId);
+            prepStm = JDBCConnection.getConnection().prepareStatement("DELETE FROM Clients WHERE Id= ?");
+            prepStm.setInt(1, Id);
 
             if (prepStm.executeUpdate()!=1){
                 throw new SQLException();

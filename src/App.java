@@ -11,11 +11,16 @@
  */
 
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import controller.BookController;
+import controller.MenuController;
+import model.BookMapper;
 import model.BookModel;
 import utils.ConsoleRead;
+import view.BookView;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class App{
@@ -27,19 +32,33 @@ public class App{
 //            System.out.println(i);
 //        }
 
-        BookController bookCon = new BookController();
-        bookCon.printMenu();
-        int myInt = ConsoleRead.readInt("Podaj liczbę");
-        System.out.println("Podana wartość to: " + myInt);
+//        MenuController mc = new MenuController();
+//        mc.open();
+//        System.out.println("Miłego dnia.");
+
+        BookMapper bm = new BookMapper();
+//        bm.save(new BookModel("W poszukiwaniu wyciętego lasu", "Marcel Proust", 1913, 14566));
+        bm.getAll().forEach( (x)-> System.out.println(x));
+//        System.out.println(bm.getById(6));
+        bm.delByID(12);
+
+//        System.out.println(ConsoleRead.readInt());
+//        System.out.println();
+//        System.out.println(ConsoleRead.readInt());
 
 
 
+//        System.out.println(ConsoleRead.readString());
+//        System.out.println();
+//        System.out.println(ConsoleRead.readString());
 
-        //        bookCon.executeMenu(BookController.BookActions.ADD_BOOK);
+
+
+//        bookCon.executeMenu(BookController.BookActions.ADD_BOOK);
+
+//        bookCon.executeMenu(BookController.BookActions.valueOf("GET_BY_ID"));
 //        bookCon.executeMenu(BookController.BookActions.GET_ALL);
-//        BookModel.rentBook(2, 3);
-//        BookModel.rentBook(1, 3);
-//        BookModel.rentBook(4, 2);
+
 
 
 //        libControl.menuControl();

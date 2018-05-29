@@ -1,12 +1,30 @@
 package controller;
 
+import utils.ConsoleRead;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public abstract class BaseController {
+
     public abstract void executeMenu(int option);
-    protected static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  // tylko dzieci mają do niego dostęp
 
     public abstract void printMenu();
 
+    public void open() {
+        int option = 1;
+        while (true) {
+            printMenu();
+            if ((option = ConsoleRead.readInt()) !=0){
+                executeMenu(option);
+            } else {
+                break;
+            }
+        }
+    }
 }
+
+/*
+poziom 0: tworzy nowy podpoziom
+    poziom 1: zapetlone wykonanie
+ */

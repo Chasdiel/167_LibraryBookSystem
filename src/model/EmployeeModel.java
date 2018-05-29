@@ -1,19 +1,19 @@
 package model;
 
 
-import db.JDBCConnection;
+import dbConnect.JDBCConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class EmployeeModel {
-    private int EmployeeID;
+    private int Id;
     public String name;
     private String password;
     private String login;
 
-    public EmployeeModel(int EmployeeID, String name, String password, String login) {
-        setEmployeeID(EmployeeID);
+    public EmployeeModel(int Id, String name, String password, String login) {
+        setId(Id);
         setName(name);
     }
     public EmployeeModel(String name){
@@ -36,12 +36,12 @@ public class EmployeeModel {
         this.login = login;
     }
 
-    public int getEmployeeID() {
-        return EmployeeID;
+    public int getId() {
+        return Id;
     }
 
-    private void setEmployeeID(int EmployeeID) {
-        this.EmployeeID = EmployeeID;
+    private void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getName() {
@@ -77,11 +77,11 @@ public class EmployeeModel {
         return false;
     }
 
-    public static boolean delEmployeeByID(int employeeId){
+    public static boolean delEmployeeByID(int Id){
         PreparedStatement prepStm = null;
         try {
-            prepStm = JDBCConnection.getConnection().prepareStatement("DELETE FROM Employees WHERE employeeId= ?");
-            prepStm.setInt(1, employeeId);
+            prepStm = JDBCConnection.getConnection().prepareStatement("DELETE FROM Employees WHERE Id= ?");
+            prepStm.setInt(1, Id);
 
             if (prepStm.executeUpdate()!=1){
                 throw new SQLException();

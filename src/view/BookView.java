@@ -2,25 +2,22 @@ package view;
 
 import controller.BaseController;
 import model.BookModel;
+import utils.ConsoleRead;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BookView {
 
-    public static BookModel addBook(BufferedReader br) throws IOException{
+    public static BookModel addBook(){
         System.out.println("Podaj informacje o książce:");
-        System.out.println("Tytuł: ");
-        String title = br.readLine();
-        System.out.println("Autor: ");
-        String author = br.readLine();
-        System.out.println("Rok wydania: ");
-        int releaseYear =  Integer.parseInt(br.readLine());
-        System.out.println("Ilość stron: ");
-        int pages = Integer.parseInt(br.readLine());
 
+        String title = ConsoleRead.readString("Tytuł: ");
+        String author = ConsoleRead.readString("Autor: ");
+        int releaseYear = ConsoleRead.readInt("Rok wydania: ");
+        int pages= ConsoleRead.readInt("Ilość stron: ");
+        if ((releaseYear ==-1) || (pages==-1)){
+            return null;
+        }
         return new BookModel(title, author, releaseYear, pages);
     }
     public static void getAll(ArrayList<BookModel> books){
@@ -29,32 +26,31 @@ public class BookView {
         }
     }
 
-    public static int getById(BufferedReader br) throws IOException{
+    public static int getById(){
         System.out.println("Podaj id książki: ");
-        int bookId = Integer.parseInt(br.readLine());
-        return bookId;
+        return ConsoleRead.readInt();
     }
 
     public static void getBook(BookModel book){
-        System.out.println(book);
+        if(book == null){
+            System.out.println("Książka o podanym id nie istnieje.");
+        } else {
+            System.out.println(book);
+        }
     }
 
-    public static int[] rentBook(BufferedReader br) throws IOException{
-        System.out.println("Podaj id książki: ");
-        int bookId = Integer.parseInt(br.readLine());
+    public static int[] rentBook(){
+        int bookId = ConsoleRead.readInt("Podaj id książki: ");
+        int clientId = ConsoleRead.readInt("Podaj id klienta: ");
 
-        System.out.println("Podaj id klienta: ");
-        int clientId = Integer.parseInt(br.readLine());
         return new int[]{bookId, clientId};
     }
 
-    public static int returnBook(BufferedReader br) throws IOException {
-        System.out.println("Podaj id książki: ");
-        return Integer.parseInt(br.readLine());
+    public static int returnBook(){
+        return ConsoleRead.readInt("Podaj id książki: ");
     }
 
-    public static int removeBook(BufferedReader br) throws IOException {
-        System.out.println("Podaj id książki: ");
-        return Integer.parseInt(br.readLine());
+    public static int removeBook() {
+        return ConsoleRead.readInt("Podaj id książki: ");
     }
 }

@@ -11,6 +11,7 @@ public class BookController extends BaseController{
     private static BookController bookController;
 
     public enum BookActions{
+        EXIT("Wyjdź"),
         ADD_BOOK("Dodaj książkę"),
         GET_ALL("Wyświetl wszystkie książki"),
         GET_BY_ID("Pobierz książkę o danym ID"),
@@ -19,14 +20,16 @@ public class BookController extends BaseController{
         REMOVE_BOOK("Usuń książkę");
 
         private String description;
-        private BookActions(String desc){
+        BookActions(String desc){
             description = desc;
         }
+
         @Override
         public String toString() {
             return description;
         }
     }
+
 
     public static BookController getInstance(){
         if (bookController==null){
@@ -64,6 +67,7 @@ public class BookController extends BaseController{
                 removeBook();
                 break;
         }
+
     }
 
     @Override
@@ -74,51 +78,31 @@ public class BookController extends BaseController{
     }
 
     private void addBook(){
-        try{
-            BookModel newBook = BookView.addBook(br);   //BufferedReader dziedziczony z rodzica
+            BookModel newBook = BookView.addBook();   //BufferedReader dziedziczony z rodzica
             BookModel.createBook(newBook);
-        } catch(IOException e){
-            System.out.println("Nie udało się dodać książki.");
-            e.printStackTrace();
-        }
-        System.out.println("Książka dodana.");
-
     }
 
     private void getAll(){
         BookView.getAll(BookModel.getAll());
     }
+
     private void getById(){
-        try{
-            BookView.getBook(BookModel.getBookById(BookView.getById(br)));
-        } catch (IOException e) {
-            System.out.println("");
-        }
+            BookView.getBook(BookModel.getBookById(BookView.getById()));
+
     }
     private void rentBook(){
-        try {
-            int[] bookClientId = BookView.rentBook(br);
+            int[] bookClientId = BookView.rentBook();
             BookModel.rentBook(bookClientId[0], bookClientId[1]);   //BufferedReader dziedziczony z rodzica
 
-        } catch (IOException e) {
-            System.out.println("Nie udało się wczytać danych.");
-        }
     }
 
     private void returnBook(){
-        try {
-            int bookId = BookView.returnBook(br);
+            int bookId = BookView.returnBook();
             BookModel.returnBook(bookId);
-        } catch (IOException e) {
-            System.out.println("Nie udało się wczytać danych.");
-        }
     }
+
     private void removeBook(){
-        try {
-            int bookId = BookView.removeBook(br);
+            int bookId = BookView.removeBook();
             BookModel.delBookByID(bookId);
-        } catch (IOException e) {
-            System.out.println("Nie udało się wczytać danych.");
-        }
     }
 }

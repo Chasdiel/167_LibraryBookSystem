@@ -4,78 +4,78 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class ConsoleRead {
-    public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static Scanner sc = new Scanner(System.in);
 
     public static String readString(String demand){
-        if(!(demand.equals(""))){
+        if (!(demand.trim().equals(""))) {
             System.out.println(demand);
         }
+        return readString();       // wywołaj metodę czytającą Stringa - bez parametru
+    }
 
+    public static String readString() {
         String answer = "";
-        while (answer.equals("")){
-            try {
-                answer = br.readLine();
-            } catch (IOException e) {
-                System.out.println("Zła wartość.");
+//        try {
+//            while (answer.equals("")) {
+//                    answer = br.readLine().trim();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+            while (answer.equals("")) {
+                answer =  sc.nextLine().trim();
             }
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Nie udało się zamknąć BufferedReadera.");;
-        }
         return answer;
     }
 
-    public static int readInt(String demand) {
-        if (!(demand.equals(""))) {
+
+    public static int readInt(String demand){
+        if (!(demand.trim().equals(""))) {
             System.out.println(demand);
         }
-
-        String answer ="a";
-
-    while (true) {
-            try {
-                answer = br.readLine();
-                if((Object)Integer.parseInt(answer) !=null){
-                    return Integer.parseInt(answer);
-                }
-            }
-            catch (Exception e) {
-                System.out.println("Zła wartość.");
-            }
-        }
+        return readInt();       // wywołaj metodę czytającą liczby - bez parametru
     }
 
-}
+    public static int readInt() {
+        int temp =-1;
 
-//    char ans = '2';
-//                char chars[] = answer.toCharArray();
-//                for(int i = 0; i< chars.length; i++){
-//                    isNotNumber &= Character.isDigit(chars[i]);
-//                    System.out.println(isNotNumber);
-//                }
-//                if(isNotNumber){
-//                    System.out.println("zamieniam");
-//                    return Integer.parseInt(answer);
-//                }
-
-
-//    public static int readInt() {
-//        int out = 0;
-//        boolean ok = false;
-//
-//        do{
+//        while (temp ==-1) {
 //            try {
-//                out = Integer.parseInt(br.readLine());
-//                ok = true;
+//                temp = Integer.parseInt(br.readLine().trim());
+//                if (!isIntValid(temp)) {
+//                    temp =-1;
+//                    System.out.println("Wartość musi być dodatnia.");
+//                }
+//            }
+//            catch (NumberFormatException e){
+//                System.out.println("Podaj liczbę dodatnią i całkowitą.");
 //            } catch (Exception e) {
-//                System.out.println("Coś nie pykło ;(");
+//                e.printStackTrace();
 //            }
 //        }
-//        while(!ok);
-//
-//        return out;
-//    }
+        while (temp ==-1) {
+            try {
+                temp = sc.nextInt();
+                if (!isIntValid(temp)) {
+                    temp =-1;
+                    System.out.println("Wartość musi być dodatnia.");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Podaj liczbę dodatnią i całkowitą.");
+                e.printStackTrace();
+                sc.next();
+            }
+        }
+        return temp;
+    }
+
+    private static boolean isIntValid(int number){
+        return number>= 0;
+    }
+}
