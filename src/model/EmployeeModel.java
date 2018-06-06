@@ -6,6 +6,7 @@ import dbConnect.JDBCConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+//TODO need to be rewritten or removed
 public class EmployeeModel {
     private int Id;
     public String name;

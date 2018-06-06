@@ -4,12 +4,13 @@ import javafx.application.Application;
 
 public class MenuController extends BaseController {
     private BookController bookCtrl = new BookController();
+    private ClientController clientCtrl = new ClientController();
 
     public enum BookActions{
         EXIT("Wyjdź"),
         BOOK_OPTIONS("Opcje książek"),
-        CLIENT_OPTIONS("Opcje klientów"),
-        EMPLOYEE_OPTIONS("Opcje pracowników");
+        CLIENT_OPTIONS("Opcje klientów");
+//        EMPLOYEE_OPTIONS("Opcje pracowników");
 
         private String description;
         BookActions(String desc){
@@ -36,12 +37,13 @@ public class MenuController extends BaseController {
             case BOOK_OPTIONS:
                 bookCtrl.open();
                 break;
+            case CLIENT_OPTIONS:
+                clientCtrl.open();
+                break;
 //            case EMPLOYEE_OPTIONS:
 //                getById();
 //                break;
-//            case CLIENT_OPTIONS:
-//                rentBook();
-//                break;
+
         }
     }
 
@@ -52,5 +54,3 @@ public class MenuController extends BaseController {
         }
     }
 }
-
-// wykrywanie otwartego obecnie XControllera

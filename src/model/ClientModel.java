@@ -5,25 +5,18 @@ import dbConnect.JDBCConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ClientModel {
-    private int Id;
+public class ClientModel extends BaseModel {
+    private int id;
     public String name;
-    // ilość wypożyczonych książek? - po co za każdym razem przeszukiwac całą bazę, skoro wystarczy przechowywac dane
 
-    public ClientModel(int Id, String name) {
-        setId(Id);
+
+    protected ClientModel(int id, String name) {
+        super(id);
         setName(name);
     }
     public ClientModel(String name){
+        super(-1);
         setName(name);
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    private void setId(int Id) {
-        this.Id = Id;
     }
 
     public String getName() {
@@ -34,52 +27,35 @@ public class ClientModel {
         this.name = name;
     }
 
-    public static boolean createClient(ClientModel newClient){
+    @Override
+    PreparedStatement saveStatement() {
         PreparedStatement prepStm = null;
         try {
-            prepStm = JDBCConnection.getConnection().prepareStatement("INSERT INTO Clients (Name) VALUES (?)");
-            prepStm.setString(1, newClient.getName());
+            prepStm = JDBCConnection.getConnection().prepareStatement("INSERT INTO Clients (Name) VALUES(?)");
 
-
-            if (prepStm.executeUpdate()!=1){
-                throw new SQLException();
-            }
-
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Nie udało się utworzyć klienta.");
-        } finally{
-            try {
-                prepStm.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            prepStm.setString(1, this.name);
+        } catch (SQLException e){
+            e.printStackTrace();
         }
-
-        return false;
+        return prepStm;
     }
 
-    public static boolean delClientByID(int Id){
+    @Override
+    PreparedStatement updateStatement() {
         PreparedStatement prepStm = null;
         try {
-            prepStm = JDBCConnection.getConnection().prepareStatement("DELETE FROM Clients WHERE Id= ?");
-            prepStm.setInt(1, Id);
+            prepStm = JDBCConnection.getConnection().prepareStatement("UPDATE Clients SET Name = ? WHERE Id = ?");
+            prepStm.setString(1, this.name);
+            prepStm.setInt(2, getId());
 
-            if (prepStm.executeUpdate()!=1){
-                throw new SQLException();
-            }
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Nie udało się usunąć klienta");
-            } finally{
-            try {
-                prepStm.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
-        return false;
+        return prepStm;
     }
 
+    @Override
+    public String toString() {
+        return getId() + "; " + getName() ;
+    }
 }

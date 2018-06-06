@@ -1,17 +1,15 @@
 package controller;
 
+import model.BookMapper;
 import model.BookModel;
+import model.RentalMapper;
 import view.BookView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class BookController extends BaseController{
     private static BookController bookController;
 
     public enum BookActions{
-        EXIT("Wyjdź"),
+        EXIT("Wróć do menu głównego"),
         ADD_BOOK("Dodaj książkę"),
         GET_ALL("Wyświetl wszystkie książki"),
         GET_BY_ID("Pobierz książkę o danym ID"),
@@ -44,7 +42,7 @@ public class BookController extends BaseController{
         executeMenu(BookActions.values()[option]);
     }
 
-    // tutaj wchodzą widoki
+
     // tutaj wchodzą widoki
     public void executeMenu(BookActions action) {
         switch (action){
@@ -67,8 +65,8 @@ public class BookController extends BaseController{
                 removeBook();
                 break;
         }
-
     }
+
 
     @Override
     public void printMenu() {
@@ -78,31 +76,36 @@ public class BookController extends BaseController{
     }
 
     private void addBook(){
-            BookModel newBook = BookView.addBook();   //BufferedReader dziedziczony z rodzica
-            BookModel.createBook(newBook);
+        BookMapper bMap = new BookMapper();
+        BookModel newBook = BookView.addBook();   //BufferedReader dziedziczony z rodzica
+        bMap.save(newBook);
     }
 
     private void getAll(){
-        BookView.getAll(BookModel.getAll());
+        BookMapper bMap = new BookMapper();
+        BookView.getAll(bMap.getAll());
     }
 
     private void getById(){
-            BookView.getBook(BookModel.getBookById(BookView.getById()));
+        BookMapper bMap = new BookMapper();
+            BookView.getBook(bMap.getById(BookView.getById()));
 
     }
     private void rentBook(){
+        RentalMapper rMap = new RentalMapper();
             int[] bookClientId = BookView.rentBook();
-            BookModel.rentBook(bookClientId[0], bookClientId[1]);   //BufferedReader dziedziczony z rodzica
-
+            rMap.rentBook(bookClientId[0], bookClientId[1]);
     }
 
     private void returnBook(){
-            int bookId = BookView.returnBook();
-            BookModel.returnBook(bookId);
+        RentalMapper rMap = new RentalMapper();
+        int bookId = BookView.returnBook();
+        rMap.returnBook(bookId);
     }
 
     private void removeBook(){
+        BookMapper bMap = new BookMapper();
             int bookId = BookView.removeBook();
-            BookModel.delBookByID(bookId);
+            bMap.delete(bookId);
     }
 }

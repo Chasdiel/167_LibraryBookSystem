@@ -1,6 +1,5 @@
 package view;
 
-import controller.BaseController;
 import model.BookModel;
 import utils.ConsoleRead;
 
@@ -26,10 +25,12 @@ public class BookView {
         }
     }
 
+
     public static int getById(){
         System.out.println("Podaj id książki: ");
         return ConsoleRead.readInt();
     }
+
 
     public static void getBook(BookModel book){
         if(book == null){
@@ -39,6 +40,7 @@ public class BookView {
         }
     }
 
+
     public static int[] rentBook(){
         int bookId = ConsoleRead.readInt("Podaj id książki: ");
         int clientId = ConsoleRead.readInt("Podaj id klienta: ");
@@ -46,9 +48,11 @@ public class BookView {
         return new int[]{bookId, clientId};
     }
 
+
     public static int returnBook(){
         return ConsoleRead.readInt("Podaj id książki: ");
     }
+
 
     public static int removeBook() {
         return ConsoleRead.readInt("Podaj id książki: ");
